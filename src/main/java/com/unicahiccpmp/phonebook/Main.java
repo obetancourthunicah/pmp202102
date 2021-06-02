@@ -40,7 +40,7 @@ public class Main {
                     crearNuevoRegistro();
                     break;
                 case "U": // update
-                    
+                    actualizarRegistro();
                     break;
                 case "D": //Delete
                     
@@ -97,5 +97,32 @@ public class Main {
         
         System.out.println();
         
+    }
+    public static void actualizarRegistro(){
+        //Primero Obtener el ID de un registro
+        System.out.println("Escriba el código del registro a actualizar:");
+        int idRegistro = entradaTeclado.nextInt();
+        // Con el ID se debe extraer la data del registro;
+        PhoneBookEntry registroAActualizar = miConexion.obtenerUnRegistro(idRegistro);
+        System.out.println(SeparadorDeLinea);
+        System.out.println(registroAActualizar.obtenerTextoConFormato());
+        System.out.println(SeparadorDeLinea);
+        
+        if (registroAActualizar.getID() > 0){
+            //Capturar Datos para actualizar registro
+            System.out.println("Name (" + registroAActualizar.getNAME() + "):");
+            String _NAME = entradaTeclado.nextLine();
+            if (_NAME.isEmpty() && !_NAME.equals(registroAActualizar.getNAME())){
+                registroAActualizar.setNAME(_NAME);
+            }
+            System.out.println("Phone 1 (" + registroAActualizar.getPHONE1()+ "):");
+            String _PHONE1 = entradaTeclado.nextLine();
+            System.out.println("Phone 2 (" + registroAActualizar.getPHONE2() + "):");
+            String _PHONE2 = entradaTeclado.nextLine();
+            System.out.println("Email (" + registroAActualizar.getEMAIL() + "):");
+            String _EMAIL = entradaTeclado.nextLine();
+        }
+        System.out.println(registroAActualizar.obtenerTextoConFormato());
+        String variableHuerfana = entradaTeclado.nextLine();
     }
 }

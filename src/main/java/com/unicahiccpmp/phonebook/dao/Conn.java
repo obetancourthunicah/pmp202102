@@ -82,4 +82,26 @@ public class Conn {
             System.exit(0);
         }
     }
+    public PhoneBookEntry obtenerUnRegistro( int idRegistro) {
+        try{
+            String setenciaSql = "SELECT * from phones where ID=%d;";
+            Statement comandoSql = c.createStatement();
+            ResultSet cursorDeRegistro = comandoSql.executeQuery(
+                String.format(setenciaSql, idRegistro)
+            );
+            PhoneBookEntry miRegistro = new PhoneBookEntry();
+            while ( cursorDeRegistro.next()){
+                miRegistro.setID(cursorDeRegistro.getInt("ID"));
+                miRegistro.setNAME(cursorDeRegistro.getString("NAME"));
+                miRegistro.setPHONE1(cursorDeRegistro.getString("PHONE1"));
+                miRegistro.setPHONE2(cursorDeRegistro.getString("PHONE2"));
+                miRegistro.setEMAIL(cursorDeRegistro.getString("EMAIL"));
+            }
+            return miRegistro;
+        } catch (Exception e) {
+            System.err.println(" Error " + e.getMessage());
+            System.exit(0);
+            return null;
+        }
+    }
 }
