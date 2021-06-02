@@ -87,7 +87,7 @@ public class PhoneBookEntry {
     private String _PHONE2;
     private String _EMAIL;
     
-    public String getFormattedText(){
+    public String obtenerTextoConFormato(){
         return String.format(
                 "%d\t%-40s\t%-15s\t%-15s\t%-40s",
                 _ID,
