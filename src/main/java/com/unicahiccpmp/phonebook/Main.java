@@ -102,6 +102,8 @@ public class Main {
         //Primero Obtener el ID de un registro
         System.out.println("Escriba el código del registro a actualizar:");
         int idRegistro = entradaTeclado.nextInt();
+        //Patch por que nextInt no lee \n asi que se debe correr nextLine para evitar el no poder encontrar el registro
+        entradaTeclado.nextLine();
         // Con el ID se debe extraer la data del registro;
         PhoneBookEntry registroAActualizar = miConexion.obtenerUnRegistro(idRegistro);
         System.out.println(SeparadorDeLinea);
@@ -112,15 +114,28 @@ public class Main {
             //Capturar Datos para actualizar registro
             System.out.println("Name (" + registroAActualizar.getNAME() + "):");
             String _NAME = entradaTeclado.nextLine();
-            if (_NAME.isEmpty() && !_NAME.equals(registroAActualizar.getNAME())){
+            if (!_NAME.isEmpty() && !_NAME.equals(registroAActualizar.getNAME())){
                 registroAActualizar.setNAME(_NAME);
             }
+            
             System.out.println("Phone 1 (" + registroAActualizar.getPHONE1()+ "):");
             String _PHONE1 = entradaTeclado.nextLine();
+            if (!_PHONE1.isEmpty() && !_PHONE1.equals(registroAActualizar.getPHONE1())){
+                registroAActualizar.setPHONE1(_PHONE1);
+            }
+            
             System.out.println("Phone 2 (" + registroAActualizar.getPHONE2() + "):");
             String _PHONE2 = entradaTeclado.nextLine();
+            if (!_PHONE2.isEmpty() && !_PHONE2.equals(registroAActualizar.getPHONE2())){
+                registroAActualizar.setPHONE2(_PHONE2);
+            }
+            
+            
             System.out.println("Email (" + registroAActualizar.getEMAIL() + "):");
             String _EMAIL = entradaTeclado.nextLine();
+            if (!_EMAIL.isEmpty() && !_EMAIL.equals(registroAActualizar.getEMAIL())){
+                registroAActualizar.setEMAIL(_EMAIL);
+            }
         }
         System.out.println(registroAActualizar.obtenerTextoConFormato());
         String variableHuerfana = entradaTeclado.nextLine();
