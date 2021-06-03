@@ -43,7 +43,7 @@ public class Main {
                     actualizarRegistro();
                     break;
                 case "D": //Delete
-                    
+                    eliminarRegistro();
                     break;
             }
             mostrarRegistros();
@@ -106,14 +106,18 @@ public class Main {
         entradaTeclado.nextLine();
         // Con el ID se debe extraer la data del registro;
         PhoneBookEntry registroAActualizar = miConexion.obtenerUnRegistro(idRegistro);
-        System.out.println(SeparadorDeLinea);
-        System.out.println(registroAActualizar.obtenerTextoConFormato());
-        System.out.println(SeparadorDeLinea);
+        
         
         if (registroAActualizar.getID() > 0){
+            System.out.println(SeparadorDeLinea);
+            System.out.println(registroAActualizar.obtenerTextoConFormato());
+            System.out.println(SeparadorDeLinea);
             //Capturar Datos para actualizar registro
             System.out.println("Name (" + registroAActualizar.getNAME() + "):");
             String _NAME = entradaTeclado.nextLine();
+            // ! negacion   
+            // boolean algo = true;
+            // algo != algo; // false
             if (!_NAME.isEmpty() && !_NAME.equals(registroAActualizar.getNAME())){
                 registroAActualizar.setNAME(_NAME);
             }
@@ -136,8 +140,40 @@ public class Main {
             if (!_EMAIL.isEmpty() && !_EMAIL.equals(registroAActualizar.getEMAIL())){
                 registroAActualizar.setEMAIL(_EMAIL);
             }
+            
+            System.out.println(registroAActualizar.obtenerTextoConFormato());
+            miConexion.actualizarRegistro(registroAActualizar);
+            System.out.println("Registro Actualizado!!! Presione Enter para Continuar.");
+        } else {
+            System.out.println("No existe Registro !!! Presione Enter para Continuar.");
         }
-        System.out.println(registroAActualizar.obtenerTextoConFormato());
-        String variableHuerfana = entradaTeclado.nextLine();
+        
+        entradaTeclado.nextLine();
+    }
+    public static void eliminarRegistro(){
+        System.out.println("Escriba el código del registro a eliminar:");
+        int idRegistro = entradaTeclado.nextInt();
+        //Patch por que nextInt no lee \n asi que se debe correr nextLine para evitar el no poder encontrar el registro
+        entradaTeclado.nextLine();
+        // Con el ID se debe extraer la data del registro;
+        PhoneBookEntry registroAEliminar = miConexion.obtenerUnRegistro(idRegistro);
+        if (registroAEliminar.getID() > 0) {
+            System.out.println(SeparadorDeLinea);
+            System.out.println(registroAEliminar.obtenerTextoConFormato());
+            System.out.println(SeparadorDeLinea);
+
+            System.out.println("¿Desea Eliminar el registro? (S/N):");
+            String opcion = entradaTeclado.nextLine();
+            if (opcion.toUpperCase().equals("S")){
+                miConexion.eliminarRegistro(registroAEliminar);
+                System.out.println("Registro Eliminado. Presione Enter para continuar.");
+            } else {
+                System.out.println("Operación cancelada. Presione Enter para continuar.");
+            }
+        } else {
+            System.out.println("No existe Registro !!! Presione Enter para Continuar.");
+        }
+        
+        entradaTeclado.nextLine();
     }
 }

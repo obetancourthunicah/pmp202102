@@ -8,7 +8,14 @@ package com.unicahiccpmp.phonebook.dao;
 import java.sql.*;
 import java.util.ArrayList;
 
+/*
 
+C - Create -- Nuevo
+R - Read  -- Leer
+U - Update -- Actualizar
+D - Delete -- Eliminar
+
+*/
 
 /**
  *
@@ -97,6 +104,7 @@ public class Conn {
                 miRegistro.setPHONE2(cursorDeRegistro.getString("PHONE2"));
                 miRegistro.setEMAIL(cursorDeRegistro.getString("EMAIL"));
             }
+            comandoSql.close();
             return miRegistro;
         } catch (Exception e) {
             System.err.println(" Error " + e.getMessage());
@@ -104,4 +112,44 @@ public class Conn {
             return null;
         }
     }
+    public void actualizarRegistro(PhoneBookEntry registroAActualizar){
+        try {
+            String sentencialSQL = "UPDATE phones set NAME='%s', "
+                    + "PHONE1='%s', PHONE2='%s', EMAIL='%s' "
+                    + "where ID=%d;";
+            Statement comandoSQL = c.createStatement();
+            comandoSQL.executeUpdate(
+                    String.format( 
+                            sentencialSQL,
+                            registroAActualizar.getNAME(),
+                            registroAActualizar.getPHONE1(),
+                            registroAActualizar.getPHONE2(),
+                            registroAActualizar.getEMAIL(),
+                            registroAActualizar.getID()
+                    )
+            );
+            comandoSQL.close();
+        } catch (Exception ex){
+            System.err.println(" Error " + ex.getMessage());
+            System.exit(0);
+        }
+    }
+    
+    public void eliminarRegistro(PhoneBookEntry registroAEliminar){
+        try {
+            String sentenciaSQL = "DELETE from phones where ID=%d;";
+            Statement comandoSQL = c.createStatement();
+            comandoSQL.executeUpdate(
+                    String.format(
+                            sentenciaSQL,
+                            registroAEliminar.getID()
+                    )
+            );
+            comandoSQL.close();
+        } catch(Exception ex){
+            System.err.println(" Error " + ex.getMessage());
+            System.exit(0);
+        }
+    }
+    
 }
